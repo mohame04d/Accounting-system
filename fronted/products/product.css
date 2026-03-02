@@ -1,0 +1,100 @@
+ body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      background: #f4f6fc;
+      color: #333;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #2e86de;
+      margin-bottom: 15px;
+    }
+
+    input, button {
+      padding: 10px 12px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: #2e86de;
+      outline: none;
+      box-shadow: 0 0 5px rgba(46,134,222,0.3);
+    }
+
+    button {
+      background: #2e86de;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1b4f72;
+      transform: scale(1.05);
+    }
+
+    hr {
+      margin: 30px 0;
+      border: 0;
+      border-top: 2px solid #ddd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    table th {
+      background: #2e86de;
+      color: white;
+      font-weight: 600;
+    }
+
+    table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+
+    table input {
+      width: 80px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    table button {
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    #searchInput {
+      width: 100%;
+      margin: 10px 0 20px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    @media (max-width: 768px) {
+      input, button {
+        width: 100%;
+      }
+
+      table input {
+        width: 60px;
+      }
+    }

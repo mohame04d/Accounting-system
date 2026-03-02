@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>فاتورة مبيعات</title>
+<style>
+@page { size: A4; margin: 20mm; }
+body { font-family: "Arial", sans-serif; direction: rtl; width: 210mm; margin: 0 auto; padding: 20px; color: #000; background-color: #fff; }
+.header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+.header h1 { margin: 0; font-size: 26px; color: #2c3e50; }
+.header p { margin: 2px 0; font-size: 14px; color: #34495e; }
+.customer-details, .invoice-details { width: 100%; margin-bottom: 20px; font-size: 14px; }
+.customer-details td, .invoice-details td { padding: 5px; }
+.items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.items-table th, .items-table td { border: 1px solid #bdc3c7; padding: 8px; text-align: center; font-size: 14px; }
+.items-table th { background-color: #ecf0f1; font-weight: bold; }
+.items-table tr:nth-child(even) { background-color: #f9f9f9; }
+.totals { width: 50%; float: right; border-collapse: collapse; margin-bottom: 20px; font-size: 16px; }
+.totals td { padding: 8px; text-align: right; }
+.totals tr:last-child td { font-size: 18px; font-weight: bold; color: #e74c3c; }
+.footer { text-align: center; margin-top: 50px; font-size: 14px; border-top: 2px solid #000; padding-top: 10px; color: #2c3e50; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>{{companyName}}</h1>
+  <p>{{companyAddress}} | {{companyPhone}}</p>
+  <p>فاتورة رقم: {{invoiceNumber}} | التاريخ: {{invoiceDate}}</p>
+</div>
+
+<table class="customer-details">
+  <tr>
+    <td>العميل: {{customerName}}</td>
+    <td>الهاتف: {{customerPhone}}</td>
+  </tr>
+</table>
+
+<table class="items-table">
+  <thead>
+    <tr>
+      <th>م</th>
+      <th>الصنف</th>
+      <th>الكمية</th>
+      <th>سعر الوحدة</th>
+      <th>الإجمالي</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{itemsRows}}
+  </tbody>
+</table>
+
+<table class="totals">
+  <tr>
+    <td>الإجمالي الفرعي:</td>
+    <td>{{subtotal}}</td>
+  </tr>
+  <tr>
+    <td>الخصم:</td>
+    <td>{{discount}}</td>
+  </tr>
+  <tr>
+    <td>الإجمالي النهائي:</td>
+    <td>{{netTotal}}</td>
+  </tr>
+  <tr>
+    <td>المدفوع:</td>
+    <td>{{paid}}</td>
+  </tr>
+  <tr>
+    <td>المتبقي:</td>
+    <td>{{due}}</td>
+  </tr>
+</table>
+
+<div class="footer">
+  شكراً لتعاملكم معنا ❤️<br>
+  {{companyWebsite}}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const saleId = new URLSearchParams(window.location.search).get("id") || "1";
+
+  // جلب بيانات الفاتورة
+  const sale = await window.api.getSaleById(saleId);
+  if (!sale) return alert("خطأ: لم يتم العثور على بيانات الفاتورة");
+
+  // تحويل items_details من JSON
+  const items = JSON.parse(sale.items_details);
+
+  // توليد صفوف الأصناف
+  let itemsHtml = "";
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const product = await window.api.getProductById(item.productId);
+
+    itemsHtml += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${product.productName}</td>
+        <td>${item.quantity}</td>
+        <td>${item.price.toFixed(2)}</td>
+        <td>${(item.quantity * item.price).toFixed(2)}</td>
+      </tr>
+    `;
+  }
+
+  // حساب الإجماليات
+  const subtotal = items.reduce((sum, i) => sum + i.quantity * i.price, 0);
+  const netTotal = subtotal - (sale.discount_percentage || 0);
+  const due = netTotal - (sale.total || 0); // total مدفوع
+
+  // استبدال placeholders
+  document.body.innerHTML = document.body.innerHTML
+    .replace("{{companyName}}", "مصنع محمد")
+    .replace("{{companyAddress}}", "العنوان هنا")
+    .replace("{{companyPhone}}", "01000000000")
+    .replace("{{companyWebsite}}", "example.com")
+    .replace("{{invoiceNumber}}", sale.invoice_number)
+    .replace("{{invoiceDate}}", sale.invoice_date.split("T")[0])
+    .replace("{{customerName}}", sale.customer_name)
+    .replace("{{customerPhone}}", sale.customer_phone)
+    .replace("{{itemsRows}}", itemsHtml)
+    .replace("{{subtotal}}", subtotal.toFixed(2))
+    .replace("{{discount}}", (sale.discount_percentage || 0).toFixed(2))
+    .replace("{{netTotal}}", (sale.total_before_discount - (sale.discount_percentage || 0)).toFixed(2))
+    .replace("{{paid}}", (sale.total || 0).toFixed(2))
+    .replace("{{due}}", due.toFixed(2));
+});
+</script>
+
+</body>
+</html>

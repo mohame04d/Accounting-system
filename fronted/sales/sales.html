@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>المبيعات</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .error-msg { color: red; font-size: 0.8em; margin-top: 2px; display: block; }
+    .item-row { display: flex; gap: 10px; margin-bottom: 8px; align-items: center; }
+    .item-row input, .item-row select { padding: 4px; }
+    #add-item { margin-top: 8px; padding: 6px 12px; }
+    .print-invoice-btn { padding: 4px 8px; background-color: #2ecc71; color: #fff; border: none; border-radius: 3px; cursor: pointer; }
+    .print-invoice-btn:hover { background-color: #27ae60; }
+  </style>
+</head>
+<body>
+  <div class="sales-container">
+    <button id="back-dashboard" class="back-btn">← العودة للوحة التحكم</button>
+    <h1>فاتورة مبيعات</h1>
+
+    <form id="sales-form">
+      <input type="hidden" id="saleId">
+      <input type="hidden" id="invoice_number">
+
+      <input type="text" id="customer_name" placeholder="اسم العميل">
+      <input type="text" id="customer_phone" placeholder="رقم الهاتف">
+      <input type="date" id="invoice_date">
+
+      <h3>الأصناف</h3>
+      <div id="items-container"></div>
+      <button type="button" id="add-item">إضافة صنف</button>
+
+      <h3>الخصم (%)</h3>
+      <input type="number" id="discount" placeholder="أدخل نسبة الخصم" min="0" max="100" step="0.01">
+
+      <select id="payment_method">
+        <option value="cash">نقدي</option>
+        <option value="visa">فيزا</option>
+        <option value="debt">آجل</option>
+      </select>
+
+      <textarea id="notes" placeholder="ملاحظات"></textarea>
+
+      <h3>الإجمالي قبل الخصم: <span id="total-before">0</span></h3>
+      <h3>الإجمالي بعد الخصم: <span id="total-after">0</span></h3>
+
+      <button type="submit">حفظ الفاتورة</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>العميل</th>
+          <th>رقم الفاتورة</th>
+          <th>التاريخ</th>
+          <th>الإجمالي</th>
+          <th>حذف</th>
+          <th>تعديل</th>
+          <th>طباعة</th>
+        </tr>
+      </thead>
+      <tbody id="sales-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- استدعاء ملف JS خارجي -->
+  <script src="sales.js"></script>
+</body>
+</html>

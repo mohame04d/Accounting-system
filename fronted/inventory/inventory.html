@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>الجرد</title>
+  <style>
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f4f4f4; }
+  </style>
+</head>
+<body>
+  <h1>الجرد</h1>
+  <button id="back-dashboard">العودة للوحة التحكم</button>
+  <table>
+    <thead>
+      <tr>
+        <th>كود الصنف</th>
+        <th>اسم الصنف</th>
+        <th>الكمية الحالية</th>
+        <th>سعر الوحدة</th>
+        <th>القيمة الكلية</th>
+      </tr>
+    </thead>
+    <tbody id="inventory-table-body">
+      <!-- المنتجات هتتحمل هنا -->
+    </tbody>
+  </table>
+
+  <script src="./inventory.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوارد</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="purchases-container">
+        <button id="back-dashboard" class="back-btn">← العودة للوحة التحكم</button>
+        <h1>الوارد</h1>
+
+        <!-- فورم إضافة/تعديل وارد -->
+        <form id="purchase-form">
+            <input type="text" id="supplier_name" placeholder="اسم المورد" required>
+            <input type="text" id="supplier_phone" placeholder="رقم الهاتف">
+
+            <!-- رقم الفاتورة الآن readonly ويعرض الرقم التلقائي -->
+            <input type="text" id="invoice_number" placeholder="رقم الفاتورة" readonly>
+
+            <input type="date" id="invoice_date" placeholder="تاريخ الفاتورة">
+
+            <h3>المنتجات</h3>
+            <div id="products-container">
+                <div class="product-item">
+                    <input type="text" class="product_name" placeholder="اسم الصنف" required>
+                    <input type="number" class="quantity" placeholder="الكمية" required>
+                    <input type="number" class="price" placeholder="السعر" step="0.01" required>
+                    <button type="button" class="remove-product">حذف صنف</button>
+                </div>
+            </div>
+            <button type="button" id="add-product">إضافة صنف آخر</button>
+            <button type="submit">حفظ الوارد</button>
+        </form>
+
+        <!-- جدول عرض الواردات -->
+        <table>
+            <thead>
+                <tr>
+                    <th>المورد</th>
+                    <th>رقم الهاتف</th>
+                    <th>رقم الفاتورة</th>
+                    <th>التاريخ</th>
+                    <th>المنتجات</th>
+                    <th>حذف</th>
+                    <th>تعديل</th>
+                    <th>طباعة</th>
+                </tr>
+            </thead>
+            <tbody id="purchase-table-body"></tbody>
+        </table>
+    </div>
+
+    <script src="./purchases.js"></script>
+    <script>
+        // عند تحميل الفورم، نجيب الرقم التالي من الباك إند ونعرضه
+        window.api.getNextInvoiceNumber?.().then((number) => {
+            const invoiceInput = document.getElementById("invoice_number");
+            if (invoiceInput) invoiceInput.value = number;
+        });
+    </script>
+</body>
+</html>

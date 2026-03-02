@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة المنتجات</title>
+  <link rel="stylesheet" href="./product.css">
+  <style>
+    body { font-family: Arial; direction: rtl; padding: 20px; background: #f5f5f5; }
+    input, button { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
+    button { cursor: pointer; background-color: #4CAF50; color: white; border: none; }
+    button.delete-btn { background-color: #f44336; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #eee; }
+    .back-btn { margin-bottom: 15px; background-color: #555; }
+  </style>
+</head>
+<body>
+    
+  <button id="back-dashboard" class="back-btn">← العودة للوحة التحكم</button>
+
+  <h2>إضافة منتج جديد</h2>
+  <input type="text" id="productName" placeholder="اسم المنتج">
+  <input type="number" id="unitPrice" placeholder="سعر الوحدة">
+  <button id="addBtn">إضافة</button>
+
+  <hr>
+
+  <h2>قائمة المنتجات</h2>
+  <input type="text" id="searchInput" placeholder="بحث باسم المنتج...">
+
+  <table>
+    <thead>
+      <tr>
+        <th>اسم المنتج</th>
+        <th>السعر</th>
+        <th>تعديل السعر</th>
+        <th>حذف</th>
+      </tr>
+    </thead>
+    <tbody id="productsTable"></tbody>
+  </table>
+
+  <script src="./product.js"></script>
+</body>
+</html>

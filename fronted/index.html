@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>لوحة التحكم</h1>
+        </header>
+
+        <!-- Quick Access Buttons -->
+        <section class="quick-access">
+            <button class="card" id="purchases">
+                <span>الوارد</span>
+            </button>
+            <button class="card" id="sales">
+                <span>الصادر / المبيعات</span>
+            </button>
+            <button class="card" id="items">
+                <span>الأصناف / المخزون</span>
+            </button>
+            <button class="card" id="suppliers">
+                <span>الموردين</span>
+            </button>
+            <button class="card" id="reports">
+                <span>تقارير / جرد</span>
+            </button>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="summary">
+            <div class="summary-card">
+                <h3>آخر وارد</h3>
+                <p id="last-purchase">-</p>
+            </div>
+            <div class="summary-card">
+                <h3>آخر مبيعات</h3>
+                <p id="last-sale">-</p>
+            </div>
+            <div class="summary-card">
+                <h3>عدد الأصناف</h3>
+                <p id="item-count">0</p>
+            </div>
+            <div class="summary-card">
+                <h3>المخزون الحالي</h3>
+                <p id="stock-count">0</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
